@@ -1,0 +1,18 @@
+services:
+  vpn:
+    image: ghcr.io/wg-easy/wg-easy
+    environment:
+      - WG_HOST=192.168.1.206
+      - PASSWORD_HASH=$$2a$$12$$JpDatiRmThGdETPc9y73ZuP4xNr7He5AhUaDb3qJIP80dqywGsZJG
+    volumes:
+      - ./wireguard_data:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821/tcp"
+    restart: always
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
