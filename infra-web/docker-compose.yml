@@ -1,0 +1,22 @@
+services:
+  mon-site:
+    image: nginx:latest
+    volumes:
+      - "./html:/usr/share/nginx/html"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mon-site.rule=Host(`sahil.matrice`)"
+    networks:
+      - infra-traefik_default
+
+  mon-audit:
+    image: traefik/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mon-audit.rule=Host(`audit.sahil.matrice`)"
+    networks:
+      - infra-traefik_default
+
+networks:
+  infra-traefik_default:
+    external: true
